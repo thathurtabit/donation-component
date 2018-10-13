@@ -1,13 +1,13 @@
 .progress {
-  border: 2px solid green;
-  height: 15px;
+  border: 2px solid #909d31;
+  height: 23px;
   overflow: hidden;
   position: relative;
   width: 100%;
 }
 
 .bar {
-  background: red;
+  background: #909d31;
   bottom: 0;
   color: transparent;
   font: 0/0 a;

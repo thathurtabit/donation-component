@@ -5,6 +5,7 @@ import Subtitle from '../../atoms/subtitle';
 import ProgressBar from '../../atoms/progressbar';
 import { getPercent } from '../../../common/getPercent';
 import { timeout } from '../../../common/timeout';
+import { formatCurrency } from '../../../common/formatCurrency';
 
 const API = 'https://coop-mock-test-api.herokuapp.com';
 
@@ -79,39 +80,46 @@ export default class Donation extends Component {
 	render(props, { results, progressPerc, loading }) {
 		return (
 			<article class={style.article}>
-				<Title text="Help refugees rebuild their lives and communities in Manchester" />
-				<Subtitle text="Manchester Refugee Support Network (MRSN)" />
+				<section class={style.indent}>
+					<Title text="Help refugees rebuild their lives and communities in Manchester" />
+					<Subtitle text="Manchester Refugee Support Network (MRSN)" />
 
-				{loading && <p>Loading...</p>}
+					{loading && <p>Loading...</p>}
 
-				<ProgressBar percent={progressPerc} />
+					<ProgressBar percent={progressPerc} />
 
-				{!loading && results.status === 'OK' ? (
-					<section class={style.dataContent}>
-						<div>
-							<p>
-                Raised so far: &pound;
-								{results.raised}
+					{!loading &&
+            results.status === 'OK' && (
+						<section class={style.dataContent}>
+							<h4 class={style.dataHeader}>Raised so far</h4>
+							<p class={style.dataAmount}>
+                  &pound;
+								{formatCurrency(results.raised)}
 							</p>
-							<p>
-                Target &pound;
-								{results.target}
+							<h4 class={style.dataHeader}>Target</h4>
+							<p class={style.dataAmount}>
+                  &pound;
+								{formatCurrency(results.target)}
 							</p>
-						</div>
-					</section>
-				) : (
-					<p>Problem connecting, please try again later.</p>
-				)}
-				<form onSubmit={this.handleSubmit}>
-					<legend id="donate-title">Donate to this project</legend>
-					<section>
-						<input
-							aria-labelledby="donate-title"
-							onChange={this.handleChange}
-						/>
-						<button type="submit">Donate</button>
-					</section>
-				</form>
+						</section>
+					)}
+
+					{!loading &&
+            !results.stats === 'OK' && (
+						<p>Problem connecting, please try again later.</p>
+					)}
+
+					<form class={style.formDonate} onSubmit={this.handleSubmit}>
+						<legend id="donate-title">Donate to this project</legend>
+						<section class={style.formDonateRow}>
+							<input
+								aria-labelledby="donate-title"
+								onChange={this.handleChange}
+							/>
+							<button type="submit">Donate</button>
+						</section>
+					</form>
+				</section>
 				<a href="#" class={style.cta}>
           Learn more about causes local to you
 				</a>

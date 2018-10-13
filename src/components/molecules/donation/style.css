@@ -1,19 +1,111 @@
 .article {
   align-items: center;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.075);
+  background: #fafafa;
+  border: 1px solid #dcdcdc;
   display: flex;
   flex-direction: column;
   font-family: "Roboto", sans-serif;
   justify-content: center;
-  min-height: 100%;
-  padding: 56px 20px;
-  text-align: center;
-  width: 100%;
+  width: 400px;
+}
+
+.indent {
+  border-bottom: 1px solid #dcdcdc;
+  padding: 40px;
 }
 
 .dataContent {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    "header1 header2"
+    "amount2 amount1";
+  grid-gap: 10px;
+  margin: 30px 0;
+  position: relative;
+  text-align: left;
+}
+
+.dataHeader {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: normal;
+}
+
+.dataAmount {
+  font-size: 1.75rem;
+  margin: 0;
+}
+
+.dataHeader:nth-of-type(1) {
+  grid-area: header1;
+}
+
+.dataHeader:nth-of-type(2) {
+  grid-area: header2;
+}
+
+.dataAmount:nth-of-type(1) {
+  grid-area: amount1;
+}
+
+.dataAmount:nth-of-type(1) {
+  grid-area: amount2;
+}
+
+.formDonate {
   position: relative;
 }
 
+.formDonate legend {
+  font-weight: bold;
+  margin: 0 0 10px;
+}
+
+.formDonateRow {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 10px;
+  position: relative;
+}
+
+.formDonateRow::before {
+  align-items: center;
+  content: "£";
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  position: absolute;
+  width: 15%;
+}
+
+.formDonateRow input {
+  border: 1px solid #b0b0b0;
+  font-size: 1.5rem;
+  padding: 10px 10px 10px 40px;
+  width: 100%;
+}
+
+.formDonateRow button {
+  background: #334c89;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  color: #fff;
+  padding: 0 15px;
+}
+
+.formDonateRow button:hover {
+  background: #203567;
+}
+
 .cta {
+  color: #282828;
+  display: block;
+  padding: 20px 40px;
+  text-align: left;
   text-decoration: underline;
+  width: 100%;
 }

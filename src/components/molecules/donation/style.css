@@ -33,3 +33,11 @@
 .article sup {
   color: #673ab8;
 }
+
+.dataContent {
+  position: relative;
+}
+
+.cta {
+  text-decoration: underline;
+}

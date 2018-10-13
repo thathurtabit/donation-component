@@ -88,14 +88,10 @@ export default class Donation extends Component {
 					<ProgressBar percent={progressPerc} />
 
 					<section class={style.loadedData}>
-						{loading && (
-							<p class={style.holding} title="loading">
-								<Loader />
-							</p>
-						)}
+						{loading && <Loader />}
 
 						<section
-							class={`${style.dataContent} ${!loading &&
+	class={`${style.dataContent} ${!loading &&
                 results.status === 'OK' &&
                 style.dataContentShow}`}
 						>

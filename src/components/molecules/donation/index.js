@@ -4,6 +4,7 @@ import Title from '../../atoms/title';
 import Subtitle from '../../atoms/subtitle';
 import ProgressBar from '../../atoms/progressbar';
 import { getPercent } from '../../../common/getPercent';
+import { timeout } from '../../../common/timeout';
 
 const API = 'https://coop-mock-test-api.herokuapp.com';
 
@@ -17,7 +18,9 @@ export default class Donation extends Component {
 				target: '-',
 				raised: '-'
 			},
-			donation: 0
+			donation: 0,
+			progressPerc: 0,
+			loading: true
 		};
 
 		this.handleChange = this.handleChange.bind(this);
@@ -29,10 +32,15 @@ export default class Donation extends Component {
 			const res = await fetch(API);
 			const json = await res.json();
 			const results = json ? json : null;
-			this.setState({
-				results,
-				progressPerc: getPercent(results.raised, results.target)
-			});
+
+			(async () => {
+				await timeout(1000);
+				this.setState({
+					results,
+					loading: false,
+					progressPerc: getPercent(results.raised, results.target)
+				});
+			})();
 		}
  catch (error) {
 			console.log(`Error: ${error}`);
@@ -68,15 +76,18 @@ export default class Donation extends Component {
 		);
 	}
 
-	render(props, { results, progressPerc }) {
+	render(props, { results, progressPerc, loading }) {
 		return (
 			<article class={style.article}>
 				<Title text="Help refugees rebuild their lives and communities in Manchester" />
 				<Subtitle text="Manchester Refugee Support Network (MRSN)" />
 
-				{results.status === 'OK' ? (
+				{loading && <p>Loading...</p>}
+
+				<ProgressBar percent={progressPerc} />
+
+				{!loading && results.status === 'OK' ? (
 					<section class={style.dataContent}>
-						<ProgressBar percent={progressPerc} />
 						<div>
 							<p>
                 Raised so far: &pound;

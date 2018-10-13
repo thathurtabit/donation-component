@@ -1,6 +1,8 @@
 import { Component } from 'preact';
 import WebFont from 'webfontloader';
 import style from './style';
+import Title from '../../atoms/title';
+import Subtitle from '../../atoms/subtitle';
 
 WebFont.load({
 	google: {
@@ -30,17 +32,13 @@ export default class Donation extends Component {
   		console.log(`Error: ${error}`);
   		this.setState({ results: { status: 'error' } });
   	}
-
-  	console.log('this.state: ', this.state);
   }
 
   render(props, { results }) {
   	return (
   		<article class={style.article}>
-  			<h1 id="title">
-          Help refugees rebuild their lives and communities in Manchester
-  			</h1>
-  			<h2 id="subtitle">Manchester Refugee Support Network (MRSN)</h2>
+  			<Title text="Help refugees rebuild their lives and communities in Manchester" />
+  			<Subtitle text="Manchester Refugee Support Network (MRSN)" />
 
   			{results.status === 'OK' ? (
   				<div>

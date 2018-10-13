@@ -3,6 +3,7 @@ import style from './style';
 import Title from '../../atoms/title';
 import Subtitle from '../../atoms/subtitle';
 import ProgressBar from '../../atoms/progressbar';
+import Loader from '../../atoms/loader';
 import { getPercent } from '../../../common/getPercent';
 import { timeout } from '../../../common/timeout';
 import { formatCurrency } from '../../../common/formatCurrency';
@@ -84,30 +85,39 @@ export default class Donation extends Component {
 					<Title text="Help refugees rebuild their lives and communities in Manchester" />
 					<Subtitle text="Manchester Refugee Support Network (MRSN)" />
 
-					{loading && <p>Loading...</p>}
-
 					<ProgressBar percent={progressPerc} />
 
-					{!loading &&
-            results.status === 'OK' && (
-						<section class={style.dataContent}>
+					<section class={style.loadedData}>
+						{loading && (
+							<p class={style.holding} title="loading">
+								<Loader />
+							</p>
+						)}
+
+						<section
+							class={`${style.dataContent} ${!loading &&
+                results.status === 'OK' &&
+                style.dataContentShow}`}
+						>
 							<h4 class={style.dataHeader}>Raised so far</h4>
 							<p class={style.dataAmount}>
-                  &pound;
+                &pound;
 								{formatCurrency(results.raised)}
 							</p>
 							<h4 class={style.dataHeader}>Target</h4>
 							<p class={style.dataAmount}>
-                  &pound;
+                &pound;
 								{formatCurrency(results.target)}
 							</p>
 						</section>
-					)}
 
-					{!loading &&
-            !results.stats === 'OK' && (
-						<p>Problem connecting, please try again later.</p>
-					)}
+						{!loading &&
+              !results.stats === 'OK' && (
+							<p class={style.holding}>
+                  Problem connecting, please try again later.
+							</p>
+						)}
+					</section>
 
 					<form class={style.formDonate} onSubmit={this.handleSubmit}>
 						<legend id="donate-title">Donate to this project</legend>

@@ -1,7 +1,13 @@
 .title {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   font-family: "avenir-next-demi", sans-serif;
   font-weight: normal;
   line-height: 1.5;
   margin: 0 0 1rem;
+}
+
+@media screen and (min-width: 780px) {
+  .title {
+    font-size: 1.4rem;
+  }
 }

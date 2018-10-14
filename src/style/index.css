@@ -1,10 +1,25 @@
+@font-face {
+  font-family: "avenir-next-reg";
+  src: url("../assets/fonts/1.woff2") format("woff");
+}
+
+@font-face {
+  font-family: "avenir-next-medium";
+  src: url("../assets/fonts/2.woff2") format("woff");
+}
+
+@font-face {
+  font-family: "avenir-next-demi";
+  src: url("../assets/fonts/3.woff2") format("woff");
+}
+
 html,
 body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
   background-color: #dddddd;
   color: #282828;
-  font-family: "Roboto", sans-serif;
+  font-family: "avenir-next-reg", sans-serif;
   font-weight: 500;
   height: 100%;
   margin: 0;

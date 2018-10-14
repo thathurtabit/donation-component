@@ -4,17 +4,17 @@ import Title from '../../atoms/title';
 import Subtitle from '../../atoms/subtitle';
 import ProgressBar from '../../atoms/progressbar';
 import Loader from '../../atoms/loader';
+import * as CONSTANTS from '../../../common/constants';
 import { getPercent } from '../../../common/getPercent';
 import { timeout } from '../../../common/timeout';
 import { formatCurrency } from '../../../common/formatCurrency';
-
-const API = 'https://coop-mock-test-api.herokuapp.com';
 
 export default class Donation extends Component {
 	constructor(props) {
 		super(props);
 
 		this.state = {
+			API: props.API,
 			results: {
 				status: '-',
 				target: '-',
@@ -31,7 +31,7 @@ export default class Donation extends Component {
 
 	async componentDidMount() {
 		try {
-			const res = await fetch(API);
+			const res = await fetch(this.state.API);
 			const json = await res.json();
 			const results = json ? json : null;
 
@@ -45,13 +45,12 @@ export default class Donation extends Component {
 			})();
 		}
  catch (error) {
+			this.setState({ APIError: true, loading: false });
 			console.log(`Error: ${error}`);
-			this.setState({ results: { status: 'error' } });
 		}
 	}
 
 	handleChange(event) {
-		const { results, donation } = this.state;
 		this.setState({
 			donation: event.target.value
 		});
@@ -78,12 +77,12 @@ export default class Donation extends Component {
 		);
 	}
 
-	render(props, { results, progressPerc, loading }) {
+	render(props, { results, progressPerc, loading, APIError }) {
 		return (
 			<article class={style.article}>
 				<section class={style.indent}>
-					<Title text="Help refugees rebuild their lives and communities in Manchester" />
-					<Subtitle text="Manchester Refugee Support Network (MRSN)" />
+					<Title text={CONSTANTS.TITLE_TXT} />
+					<Subtitle text={CONSTANTS.SUBTITLE_TXT} />
 
 					<ProgressBar percent={progressPerc} />
 
@@ -91,43 +90,43 @@ export default class Donation extends Component {
 						{loading && <Loader />}
 
 						<section
-	class={`${style.dataContent} ${!loading &&
+							class={`${style.dataContent} ${!loading &&
                 results.status === 'OK' &&
                 style.dataContentShow}`}
 						>
-							<h4 class={style.dataHeader}>Raised so far</h4>
-							<p class={style.dataAmount}>
+							<h4 class={style.dataHeader}>{CONSTANTS.RAISED_TXT}</h4>
+							<p id="raised" class={style.dataAmount}>
                 &pound;
 								{formatCurrency(results.raised)}
 							</p>
-							<h4 class={style.dataHeader}>Target</h4>
-							<p class={style.dataAmount}>
+							<h4 class={style.dataHeader}>{CONSTANTS.TARGET_TXT}</h4>
+							<p id="target" class={style.dataAmount}>
                 &pound;
 								{formatCurrency(results.target)}
 							</p>
 						</section>
 
 						{!loading &&
-              !results.stats === 'OK' && (
-							<p class={style.holding}>
-                  Problem connecting, please try again later.
+              APIError && (
+							<p id="error" class={style.error}>
+								{CONSTANTS.ERROR_TXT}
 							</p>
 						)}
 					</section>
 
 					<form class={style.formDonate} onSubmit={this.handleSubmit}>
-						<legend id="donate-title">Donate to this project</legend>
+						<legend id="donate-title">{CONSTANTS.DONATE_TXT}</legend>
 						<section class={style.formDonateRow}>
 							<input
 								aria-labelledby="donate-title"
 								onChange={this.handleChange}
 							/>
-							<button type="submit">Donate</button>
+							<button type="submit">{CONSTANTS.DONATE_BTN_TXT}</button>
 						</section>
 					</form>
 				</section>
 				<a href="#" class={style.cta}>
-          Learn more about causes local to you
+					{CONSTANTS.CTA_TXT}
 				</a>
 			</article>
 		);

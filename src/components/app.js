@@ -1,7 +1,8 @@
 import Donation from '../components/molecules/donation';
+import { API } from '../common/constants';
 const App = () => (
 	<div id="app">
-		<Donation />
+		<Donation API={API} />
 	</div>
 );
 

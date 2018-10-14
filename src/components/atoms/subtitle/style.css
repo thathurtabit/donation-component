@@ -3,7 +3,7 @@
   font-family: "avenir-next-reg", sans-serif;
   font-weight: normal;
   line-height: 1.5;
-  margin-bottom: 30px;
+  margin: 0 0 30px;
 }
 
 @media screen and (min-width: 780px) {

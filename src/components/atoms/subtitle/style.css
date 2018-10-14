@@ -1,6 +1,7 @@
 .subtitle {
-  font-size: 1.2rem;
-  font-weight: 300;
+  font-size: 1.4rem;
+  font-family: "avenir-next-reg", sans-serif;
+  font-weight: normal;
   line-height: 1.5;
   margin-bottom: 30px;
 }

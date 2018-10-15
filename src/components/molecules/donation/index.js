@@ -21,6 +21,7 @@ export default class Donation extends Component {
         raised: "-"
       },
       donation: 0,
+      value: '',
       progressPerc: 0,
       loading: true
     };
@@ -76,12 +77,16 @@ export default class Donation extends Component {
       () => {
         this.setState({
           progressPerc: getPercent(this.state.results.raised, results.target)
+        }, () => {
+          this.setState({
+            value: ''
+          });
         });
       }
     );
   }
 
-  render(props, { results, progressPerc, loading, APIError }) {
+  render(props, { results, progressPerc, loading, APIError, value }) {
     return (
       <article class={style.article}>
         <section class={style.indent}>
@@ -124,6 +129,7 @@ export default class Donation extends Component {
               <input
                 aria-labelledby="donate-title"
                 maxLength="8"
+                value={value}
                 onChange={this.handleChange}
               />
               <button type="submit">{CONSTANTS.DONATE_BTN_TXT}</button>
